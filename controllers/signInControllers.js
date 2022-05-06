@@ -13,7 +13,10 @@ export async function signIn(req, res) {
         if (!user) return res.status(401).send('Usuário não encontrado')
         if (! await bcrypt.compare(password, user.password)) return res.status(401).send('Dados inválidos')
         if (! await createToken(token, user._id)) return res.status(401).send('Login inválido')
-        res.status(200).send(token);
+        res.status(200).send({
+            name: user.name,
+            token: token
+        });
     } catch (e) {
         console.log(e)
         res.status(401);
