@@ -4,7 +4,8 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import { signUp } from "./controllers/signUpControllers.js";
 import { signIn } from "./controllers/signInControllers.js";
-import { postWallet, wallet } from "./controllers/walletControllers.js";
+import { getWallet } from "./controllers/walletControllers.js";
+import { putMoney, removeMoney } from "./controllers/transactionsControllers.js";
 
 
 const app = express();
@@ -18,8 +19,10 @@ app.post("/signUp", signUp);
 
 app.post("/signIn", signIn);
 
-app.get("/wallet", wallet)
-app.post('/wallet', postWallet);
+app.get("/wallet", getWallet)
+
+app.post("/walletIn", putMoney);
+app.post("/walletOut", removeMoney);
 
 const port = process.env.SERVER_PORT || 5000;
 app.listen(port, () => {
