@@ -83,6 +83,7 @@ export async function joiMethodValidate(req, res, next) {
 
 export async function idExist(req, res, next) {
     const { id } = req.params;
+    if (!id) res.sendStatus(500);
     try {
         const transaction = await db.collection('transactions').findOne({ _id: new ObjectId(id) });
         if (!transaction) res.status(404).send("Transação não existe");
