@@ -13,7 +13,7 @@ export async function tokenValidate(req, res, next) {
         // token -> sessão
         const session = await db.collection('sessions').findOne({ token });
         // sessão -> user
-        const user = await db.collection('users').findOne({ _id: session.userId });
+        const user = await db.collection('users').findOne({ _id: new ObjectId(session.userId) });
         if (!user) return res.status(401).send("Usuário não existe");
 
         // salva user
@@ -69,5 +69,14 @@ export async function joiTransactionValidate(req, res, next) {
 
     const { error } = flowSchema.validate(body, { abortEarly: false });
     if (error) return res.status(401).send("Dados incompletos")
+    next();
+}
+
+export async function joiParamsValidate(req, res, next) {
+    const { method } = req.params;
+
+    const methodSchema = joi.string().valid("in", "out").required();
+    const { error } = methodSchema.validate(method);
+    if (error) return res.status(401).send("Método inválido");
     next();
 }
