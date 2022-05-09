@@ -27,7 +27,7 @@ export async function userAlreadyExist(req, res, next) {
 
     try {
         const user = await db.collection('users').findOne({ email })
-        if (user) return res.status(401).send('Usuário não encontrado')
+        if (user) return res.status(401).send('email indisponível')
     } catch (e) {
         res.sendStatus(500);
     }

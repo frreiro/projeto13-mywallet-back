@@ -21,7 +21,7 @@ export async function comparePassword(req, res, next) {
     const { user } = res.locals;
 
 
-    if (!bcrypt.compare(password, user.password)) {
+    if (!bcrypt.compareSync(password, user.password)) {
         return res.status(401).send('Dados inválidos')
     }
     next();
