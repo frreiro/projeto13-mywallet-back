@@ -27,7 +27,6 @@ export async function manipulateTransactions(req, res) {
     const { method } = req.params;
     const { user } = res.locals;
 
-    console.log(method);
     const date = dayjs().format('DD/MM/YYYY');
     const hour = dayjs().format('HH:mm:ss');
 
@@ -71,4 +70,16 @@ export async function updateTransaction(req, res) {
 
 }
 
+
+export async function deleteTransaction(req, res) {
+    const { id } = req.params;
+    try {
+        await db.collection('transactions').deleteOne({ _id: new ObjectId(id) });
+        res.sendStatus(200);
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Não foi possível editar o conteúdo");
+    }
+
+}
 

@@ -72,11 +72,23 @@ export async function joiTransactionValidate(req, res, next) {
     next();
 }
 
-export async function joiParamsValidate(req, res, next) {
+export async function joiMethodValidate(req, res, next) {
     const { method } = req.params;
 
     const methodSchema = joi.string().valid("in", "out").required();
     const { error } = methodSchema.validate(method);
     if (error) return res.status(401).send("Método inválido");
+    next();
+}
+
+export async function idExist(req, res, next) {
+    const { id } = req.params;
+    try {
+        const transaction = await db.collection('transactions').findOne({ _id: new ObjectId(id) });
+        if (!transaction) res.status(404).send("Transação não existe");
+    } catch (e) {
+        console.log(e);
+        res.status(500).send("Não foi possível editar o conteúdo");
+    }
     next();
 }
