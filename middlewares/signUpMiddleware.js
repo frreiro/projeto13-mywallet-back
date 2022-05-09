@@ -1,4 +1,5 @@
 import db from "../db.js";
+import joi from "joi";
 
 
 
@@ -20,7 +21,6 @@ export async function joiSignUpValidate(req, res, next) {
     next();
 
 }
-
 
 export async function userAlreadyExist(req, res, next) {
     const { email } = req.body;
