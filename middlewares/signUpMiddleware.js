@@ -14,10 +14,9 @@ export async function joiSignUpValidate(req, res, next) {
 
     const { error } = signUpSchema.validate({ email, password, name }, { abortEarly: false });
     if (error) {
-        console.log(error.details.map(detail => detail.message))
-        return res.status(422).send(error);
+        console.log(error.details.map(detail => detail.message));
+        return res.status(422).send(error.details.map(detail => detail.message));
     }
-
     next();
 
 }
