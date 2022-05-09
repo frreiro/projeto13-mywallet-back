@@ -20,7 +20,7 @@ app.use(walletRouter);
 
 
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(chalk.green.bold(`Server is running on ${port}`))
 })
